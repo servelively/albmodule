@@ -1,4 +1,3 @@
-# module referance --> https://github.com/terraform-aws-modules/terraform-aws-alb,  version = "6.1"
 resource "aws_lb" "lb" {
   count = var.lb_create ? 1 : 0
 
