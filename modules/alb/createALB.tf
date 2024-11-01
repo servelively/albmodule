@@ -1,5 +1,5 @@
 # module referance --> https://github.com/terraform-aws-modules/terraform-aws-alb,  version = "6.1"
-resource "aws_lb" "vpc_module" {
+resource "aws_lb" "lb" {
   count = var.lb_create ? 1 : 0
 
   name        = var.lb_name
@@ -102,7 +102,7 @@ resource "aws_lb_target_group" "main" {
     },
   )
 
-  depends_on = [aws_lb.vpc_module]
+  depends_on = [aws_lb.lb]
 
   lifecycle {
     create_before_destroy = true
@@ -347,7 +347,7 @@ resource "aws_lb_listener_rule" "https_listener_rule" {
 
 resource "aws_lb_listener" "frontend_http_tcp" {
   count = var.lb_create ? length(var.lb_http_tcp_listeners) : 0
-  load_balancer_arn = aws_lb.vpc_module[0].arn
+  load_balancer_arn = aws_lb.lb[0].arn
   port     = var.lb_http_tcp_listeners[count.index]["port"]
   protocol = var.lb_http_tcp_listeners[count.index]["protocol"]
 
@@ -393,7 +393,7 @@ resource "aws_lb_listener" "frontend_http_tcp" {
 
 resource "aws_lb_listener" "frontend_https" {
   count = var.lb_create ? length(var.lb_https_listeners) : 0
-  load_balancer_arn = aws_lb.vpc_module[0].arn
+  load_balancer_arn = aws_lb.lb[0].arn
 
   port            = var.lb_https_listeners[count.index]["port"]
   protocol        = lookup(var.lb_https_listeners[count.index], "protocol", "HTTPS")
