@@ -1,26 +1,26 @@
 output "lb_id" {
   description = "The ID and ARN of the load balancer we created."
-  value       = concat(aws_lb.vpc_module.*.id, [""])[0]
+  value       = concat(aws_lb.lb.*.id, [""])[0]
 }
 
 output "lb_arn" {
   description = "The ID and ARN of the load balancer we created."
-  value       = concat(aws_lb.vpc_module.*.arn, [""])[0]
+  value       = concat(aws_lb.lb.*.arn, [""])[0]
 }
 
 output "lb_dns_name" {
   description = "The DNS name of the load balancer."
-  value       = concat(aws_lb.vpc_module.*.dns_name, [""])[0]
+  value       = concat(aws_lb.lb.*.dns_name, [""])[0]
 }
 
 output "lb_arn_suffix" {
   description = "ARN suffix of our load balancer - can be used with CloudWatch."
-  value       = concat(aws_lb.vpc_module.*.arn_suffix, [""])[0]
+  value       = concat(aws_lb.lb.*.arn_suffix, [""])[0]
 }
 
 output "lb_zone_id" {
   description = "The zone_id of the load balancer to assist with creating DNS records."
-  value       = concat(aws_lb.vpc_module.*.zone_id, [""])[0]
+  value       = concat(aws_lb.lb.*.zone_id, [""])[0]
 }
 
 output "lb_http_tcp_listener_arns" {
